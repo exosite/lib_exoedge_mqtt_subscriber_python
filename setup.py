@@ -3,7 +3,7 @@
 import os
 from setuptools import setup, find_packages
 
-REQUIREMENTS = ['exoedge', 'twisted-mqtt']
+REQUIREMENTS = ['exoedge']
 
 def read(fname):
     """ Primarily used to open README file. """
