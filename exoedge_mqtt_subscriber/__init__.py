@@ -1,7 +1,7 @@
 """
     An ExoEdge source for interfacing with Modbus TCP devices.
 """
-# pylint: disable=W1202,C0111
+# pylint: disable=W1202,C0111,C0301
 import sys
 import time
 import logging
@@ -34,7 +34,7 @@ class MQTT_Subscriber(AsyncSource):
                 setattr(the_channel, 'client', client)
                 def on_message(client, userdata, msg):
                     """ Default on_message function for tunable logging. """
-                    logging.info("userdata: {} dup: {} info: {} mid: {} payload: {} qos: {} retain: {} state: {} timestamp: {} topic: {}" # pylint: disable=C0301
+                    logging.info("userdata: {} dup: {} info: {} mid: {} payload: {} qos: {} retain: {} state: {} timestamp: {} topic: {}"
                                  .format(userdata,
                                          msg.dup,
                                          msg.info,
@@ -46,7 +46,7 @@ class MQTT_Subscriber(AsyncSource):
                                          msg.timestamp,
                                          msg.topic))
                     self.configio_thread.channels[client.exoedge_id]['channel'].put_data(msg.payload)
-                    self.configio_thread.channels[client.exoedge_id]['channel'].e_sync.set()
+                    self.configio_thread.channels[client.exoedge_id]['channel'].e_async.set()
                 the_channel.client.on_message = on_message
                 the_channel.client.connect(ip_address, port)
 
