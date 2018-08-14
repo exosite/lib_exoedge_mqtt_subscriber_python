@@ -44,16 +44,16 @@ class ChannelSim(StoppableThread):
         self.sim_lambda = sim_lambdas[self.name.split('/')[2]]
 
     def run(self):
-        nums = [math.pi/r for r in range(1, 100)]
+        nums = range(1, 100)
         while not self.is_stopped():
             for num in nums:
                 self.client.publish(
                     self.name,
-                    str(self.sim_lambdas())
+                    str(self.sim_lambda(num))
                 )
                 if self.is_stopped():
                     break
-                sleep(0.5)
+                sleep(1.0)
 
 for chan in config_io['channels'].keys():
     ChannelSim(
