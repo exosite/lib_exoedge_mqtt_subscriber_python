@@ -12,7 +12,7 @@ from exoedge.sources import waves
 from math import pi
 
 sim_lambdas = {
-    'rand_pm2p5': lambda t: 1000 * waves._wave_sine(pi/t),
+    'pm2p5': lambda t: 1000 * waves._wave_sine(pi/t),
     'pm10': lambda t: 50 * waves._wave_sine(pi/t),
     'ozone': lambda t: 45 * waves._wave_sine(pi/t),
     'carbonMonoxide': lambda t: 35 * waves._wave_sine(pi/t),
