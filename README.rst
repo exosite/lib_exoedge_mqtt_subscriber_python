@@ -24,19 +24,19 @@ From Source
     pip install -r requirements.txt
     python setup.py install
 
-From PyPi
+From Github
 """"""""""""
 
 The wheel for this hasn't been published yet.
 
 .. code-block::
 
-    pip install exoedge_mqtt_broker
+    pip install git+https://github.com/exosite/lib_exoedge_mqtt_subscriber_python.git
 
 ExoEdge Configuration
 ######################
 
-In order to start using this MQTT Broker source, start the ``edged`` daemon with your desired parameters. For more information on ``edged`` configuration, visit `ExoEdge <https://pypi.org/project/exoedge/>`_ on PyPi.
+In order to start using this MQTT subscriber source, start the ``edged`` daemon with your desired parameters. For more information on ``edged`` configuration, visit `ExoEdge <https://pypi.org/project/exoedge/>`_ on PyPi.
 
 Example
 """"""""
@@ -51,7 +51,7 @@ ExoSense Configuration
 
 Below is an example ``config_io`` settings that illustrates how mqtt devices or applications cat publish data into ExoEdge channels. Each channel is mapped directly to an MQTT subscription on the network (e.g. `localhost`, `192.168.254.2`).
 
-**Important:** Modbus is a ``channels.$id.protocol_config.mode.poll`` type source. Setting the mode to ``async`` or ``async2`` will not work.
+**Important:** This ``ExoEdge`` source is a ``channels.$id.protocol_config.mode.sync`` type source. Setting the mode to ``poll`` or ``async2`` will not work.
 
 .. code-block:: json
 
