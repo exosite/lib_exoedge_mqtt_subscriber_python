@@ -18,18 +18,25 @@ class MQTT_Subscriber(AsyncSource, MQTTClient):
         AsyncSource.__init__(self, **kwargs)
         MQTTClient.__init__(self, **kwargs)
         self.configio_thread = None
+        self.channels_by_topic = {}
         for thread in threading.enumerate():
             if thread.name == "ConfigIO":
                 self.configio_thread = thread
-        for name, channel in self.configio_thread.channels.items():
+        for channel_name, channel in self.configio_thread.channels.items():
             if channel.app_specific_config.get('module') == 'exoedge_mqtt_subscriber':
                 ip_address = channel.app_specific_config['parameters']['ip_address']
                 port = channel.app_specific_config['parameters']['port']
+                # topic = channel.positionals[0]
+                # exoedge_id = '.'.join(map(str, [ip_address, port, topic]))
+                # self.channels_by_exoedge_id[exoedge_id] = channel
                 client = MQTTClient()
+                setattr(client, 'exoedge_id', channel_name)
+                setattr(channel, 'client', client)
                 def on_message(client, userdata, msg):
                     """ Default on_message function for tunable logging. """
-                    logging.info("dup: {} info: {} mid: {} payload: {} qos: {} retain: {} state: {} timestamp: {} topic: {}"
-                                 .format(msg.dup,
+                    logging.info("userdata: {} dup: {} info: {} mid: {} payload: {} qos: {} retain: {} state: {} timestamp: {} topic: {}" # pylint: disable=C0301
+                                 .format(userdata,
+                                         msg.dup,
                                          msg.info,
                                          msg.mid,
                                          msg.payload,
@@ -38,14 +45,13 @@ class MQTT_Subscriber(AsyncSource, MQTTClient):
                                          msg.state,
                                          msg.timestamp,
                                          msg.topic))
-                    channel.put_data(msg.payload)
-                    channel.e_sync.set()
-                client.on_message = on_message
-                client.connect(ip_address, port)
+                    self.configio_thread.channels[client.exoedge_id].put_data(msg.payload)
+                    self.configio_thread.channels[client.exoedge_id].e_sync.set()
+                channel.client.on_message = on_message
+                channel.client.connect(ip_address, port)
 
-                client.loop_start()
-                client.subscribe(channel.app_specific_config['positionals'][0])
-                setattr(channel, 'mqtt_client', client)
+                channel.client.loop_start()
+                channel.client.subscribe(channel.app_specific_config['positionals'][0])
 
     def subscribe(self, *args, **kwargs):
         """ basically this is a no-op """

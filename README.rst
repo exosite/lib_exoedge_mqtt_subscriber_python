@@ -57,7 +57,7 @@ Below is an example ``config_io`` settings that illustrates how mqtt devices or 
 
     {
       "channels": {
-        "<topic>": {
+        "<id>": {
           "display_name": "<topic>",
           "description": "Subscription to MQTT topic <topic> on gateway.",
           "properties": {
