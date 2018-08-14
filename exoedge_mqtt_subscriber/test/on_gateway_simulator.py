@@ -44,7 +44,8 @@ class ChannelSim(StoppableThread):
         self.sim_lambda = sim_lambdas[self.name.split('/')[2]]
 
     def run(self):
-        nums = range(1, 100)
+        print("running channel simulator: {}".format(self.name))
+        nums = range(1, 10)
         while not self.is_stopped():
             for num in nums:
                 self.client.publish(
@@ -56,6 +57,7 @@ class ChannelSim(StoppableThread):
                 sleep(1.0)
 
 for chan in config_io['channels'].keys():
+    print("starting channel simulator: {}".format(chan))
     ChannelSim(
         name=config_io['channels'][chan]['protocol_config']['app_specific_config']['positionals'][0],
         client=c

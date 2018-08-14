@@ -10,7 +10,7 @@ from exoedge.sources import AsyncSource
 from paho.mqtt.client import Client as MQTTClient
 
 logging.getLogger('MQTT_BROKER')
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 
 class MQTT_Subscriber(AsyncSource):
     """ Exoedge MQTT Broker source."""
@@ -34,17 +34,18 @@ class MQTT_Subscriber(AsyncSource):
                 setattr(the_channel, 'client', client)
                 def on_message(client, userdata, msg):
                     """ Default on_message function for tunable logging. """
-                    logging.info("userdata: {} dup: {} info: {} mid: {} payload: {} qos: {} retain: {} state: {} timestamp: {} topic: {}"
-                                 .format(userdata,
-                                         msg.dup,
-                                         msg.info,
-                                         msg.mid,
-                                         msg.payload,
-                                         msg.qos,
-                                         msg.retain,
-                                         msg.state,
-                                         msg.timestamp,
-                                         msg.topic))
+                    logging.debug("userdata: {} dup: {} info: {} mid: {} payload: {} qos: {} retain: {} state: {} timestamp: {} topic: {}"
+                                  .format(userdata,
+                                          msg.dup,
+                                          msg.info,
+                                          msg.mid,
+                                          msg.payload,
+                                          msg.qos,
+                                          msg.retain,
+                                          msg.state,
+                                          msg.timestamp,
+                                          msg.topic))
+                    logging.info("{} got {}".format(client.exoedge_id, msg.payload))
                     self.configio_thread.channels[client.exoedge_id]['channel'].put_data(msg.payload)
                     self.configio_thread.channels[client.exoedge_id]['channel'].e_async.set()
                 the_channel.client.on_message = on_message
