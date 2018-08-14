@@ -7,7 +7,7 @@ import time
 import logging
 import threading
 from exoedge.sources import AsyncSource
-import paho.mqtt.client as MQTTClient
+from paho.mqtt.client import Client as MQTTClient
 
 logging.getLogger('MQTT_BROKER')
 logging.basicConfig(level=logging.DEBUG)

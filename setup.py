@@ -16,7 +16,7 @@ except:
 
 setup(
     name="exoedge_mqtt_subscriber",
-    version="18.8.14.11.34",
+    version="18.8.14.11.37",
     author="Exosite LLC",
     author_email="support@exosite.com",
     description="An ExoEdge MQTT subscriber.",
