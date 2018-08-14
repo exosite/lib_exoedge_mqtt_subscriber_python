@@ -15,14 +15,14 @@ except:
     README = 'README Not Found'
 
 setup(
-    name="exoedge_mqtt_broker",
+    name="exoedge_mqtt_subscriber",
     version="18.8.2",
     author="Exosite LLC",
     author_email="support@exosite.com",
-    description="An ExoEdge MQTT Broker.",
+    description="An ExoEdge MQTT subscriber.",
     license="Apache 2.0",
     keywords="murano exosite exoedge exosense iot iiot client gateway mqtt broker",
-    url="https://github.com/exosite/lib_exoedge_modbus_tcp_python",
+    url="https://github.com/exosite/lib_exoedge_mqtt_subscriber_python",
     packages=find_packages(),
     install_requires=REQUIREMENTS,
     long_description=README,
