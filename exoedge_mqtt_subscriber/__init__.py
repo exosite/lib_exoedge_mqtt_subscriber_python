@@ -6,17 +6,16 @@ import sys
 import time
 import logging
 import threading
-from exoedge.sources import AsyncSource, StoppableThread
+from exoedge.sources import AsyncSource
 import paho.mqtt.client as MQTTClient
 
 logging.getLogger('MQTT_BROKER')
 logging.basicConfig(level=logging.DEBUG)
 
-class MQTT_Subscriber(AsyncSource, MQTTClient):
+class MQTT_Subscriber(AsyncSource):
     """ Exoedge MQTT Broker source."""
     def __init__(self, **kwargs):
         AsyncSource.__init__(self, **kwargs)
-        MQTTClient.__init__(self, **kwargs)
         self.configio_thread = None
         self.channels_by_topic = {}
         for thread in threading.enumerate():
