@@ -23,14 +23,15 @@ class MQTT_Subscriber(AsyncSource):
                 self.configio_thread = thread
         for channel_name, channel in self.configio_thread.channels.items():
             if channel['channel'].app_specific_config.get('module') == 'exoedge_mqtt_subscriber':
+                the_channel = channel['channel']
                 ip_address = channel.app_specific_config['parameters']['ip_address']
-                port = channel.app_specific_config['parameters']['port']
-                # topic = channel.positionals[0]
+                port = the_channel.app_specific_config['parameters']['port']
+                # topic = the_channel.positionals[0]
                 # exoedge_id = '.'.join(map(str, [ip_address, port, topic]))
                 # self.channels_by_exoedge_id[exoedge_id] = channel
                 client = MQTTClient()
                 setattr(client, 'exoedge_id', channel_name)
-                setattr(channel, 'client', client)
+                setattr(the_channel, 'client', client)
                 def on_message(client, userdata, msg):
                     """ Default on_message function for tunable logging. """
                     logging.info("userdata: {} dup: {} info: {} mid: {} payload: {} qos: {} retain: {} state: {} timestamp: {} topic: {}" # pylint: disable=C0301
@@ -46,11 +47,11 @@ class MQTT_Subscriber(AsyncSource):
                                          msg.topic))
                     self.configio_thread.channels[client.exoedge_id].put_data(msg.payload)
                     self.configio_thread.channels[client.exoedge_id].e_sync.set()
-                channel.client.on_message = on_message
-                channel.client.connect(ip_address, port)
+                the_channel.client.on_message = on_message
+                the_channel.client.connect(ip_address, port)
 
-                channel.client.loop_start()
-                channel.client.subscribe(channel.app_specific_config['positionals'][0])
+                the_channel.client.loop_start()
+                the_channel.client.subscribe(the_channel.app_specific_config['positionals'][0])
 
     def subscribe(self, *args, **kwargs):
         """ basically this is a no-op """
