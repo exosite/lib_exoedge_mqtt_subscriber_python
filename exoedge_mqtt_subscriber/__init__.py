@@ -22,7 +22,7 @@ class MQTT_Subscriber(AsyncSource):
             if thread.name == "ConfigIO":
                 self.configio_thread = thread
         for channel_name, channel in self.configio_thread.channels.items():
-            if channel.app_specific_config.get('module') == 'exoedge_mqtt_subscriber':
+            if channel['channel'].app_specific_config.get('module') == 'exoedge_mqtt_subscriber':
                 ip_address = channel.app_specific_config['parameters']['ip_address']
                 port = channel.app_specific_config['parameters']['port']
                 # topic = channel.positionals[0]
