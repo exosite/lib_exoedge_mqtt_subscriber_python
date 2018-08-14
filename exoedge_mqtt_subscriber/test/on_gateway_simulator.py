@@ -1,7 +1,8 @@
-# pylint: disable=W0212,C0103
+# pylint: disable=W0212,C0103,C0301
 import sys
 import threading
 import math
+import json
 from murano_client.client import StoppableThread
 from paho.mqtt.client import Client
 from time import sleep
