@@ -1,0 +1,54 @@
+{
+  "channels": {
+    "001": {
+      "display_name": "elisucks",
+      "description": "Subscription to MQTT topic elisucks on gateway.",
+      "properties": {
+        "max": null,
+        "precision": null,
+        "data_type": "STRING",
+        "min": null
+      },
+      "protocol_config": {
+        "report_on_change": true,
+        "report_rate": 1000,
+        "sample_rate": 1000,
+        "mode": "async",
+        "app_specific_config": {
+          "function": "subscribe",
+          "parameters": {
+            "ip_address": "localhost",
+            "port": 1883
+          },
+          "positionals": ["1"],
+          "module": "exoedge_mqtt_subscriber"
+        }
+      }
+    },
+    "002": {
+      "display_name": "timsucks",
+      "description": "Subscription to MQTT topic timsucks on gateway.",
+      "properties": {
+        "max": null,
+        "precision": null,
+        "data_type": "STRING",
+        "min": null
+      },
+      "protocol_config": {
+        "report_on_change": true,
+        "report_rate": 1000,
+        "sample_rate": 1000,
+        "mode": "async",
+        "app_specific_config": {
+          "function": "subscribe",
+          "parameters": {
+            "ip_address": "localhost",
+            "port": 1883
+          },
+          "positionals": ["2"],
+          "module": "exoedge_mqtt_subscriber"
+        }
+      }
+    }
+  }
+}
