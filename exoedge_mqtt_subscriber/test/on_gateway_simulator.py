@@ -26,7 +26,7 @@ def on_publish(client, userdata, result):
 c.on_publish = on_publish
 c.loop_start()
 
-num_channels = int(sys.argv[1]) if len(argv) > 0 else 1
+num_channels = int(sys.argv[1]) if len(sys.argv) > 0 else 1
 
 class ChannelSim(StoppableThread):
     def __init__(self, **kwargs):
@@ -35,6 +35,7 @@ class ChannelSim(StoppableThread):
             name=kwargs.get('name')
         )
         self.client = kwargs.get('client')
+        setattr(self.client, 'name', kwargs.get('name'))
 
     def run(self):
         nums = [math.pi/r for r in range(1, 100)]

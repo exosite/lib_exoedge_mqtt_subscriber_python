@@ -45,8 +45,8 @@ class MQTT_Subscriber(AsyncSource):
                                          msg.state,
                                          msg.timestamp,
                                          msg.topic))
-                    self.configio_thread.channels[client.exoedge_id].put_data(msg.payload)
-                    self.configio_thread.channels[client.exoedge_id].e_sync.set()
+                    self.configio_thread.channels[client.exoedge_id]['channel'].put_data(msg.payload)
+                    self.configio_thread.channels[client.exoedge_id]['channel'].e_sync.set()
                 the_channel.client.on_message = on_message
                 the_channel.client.connect(ip_address, port)
 
