@@ -24,7 +24,7 @@ class MQTT_Subscriber(AsyncSource):
         for channel_name, channel in self.configio_thread.channels.items():
             if channel['channel'].app_specific_config.get('module') == 'exoedge_mqtt_subscriber':
                 the_channel = channel['channel']
-                ip_address = channel.app_specific_config['parameters']['ip_address']
+                ip_address = the_channel.app_specific_config['parameters']['ip_address']
                 port = the_channel.app_specific_config['parameters']['port']
                 # topic = the_channel.positionals[0]
                 # exoedge_id = '.'.join(map(str, [ip_address, port, topic]))
