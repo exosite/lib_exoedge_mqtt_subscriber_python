@@ -3,14 +3,9 @@ Description
 
 This project is an MQTT source for Exosite's ``ExoSense`` which uses ``ExoEdge``.
 
-This source can be published to by any MQTT publish on ``localhost:1883``.
+With this source installed on a gateway and the ``ExoEdge`` daemon (``edged``) running, any MQTT topic can be subscribed to by specifying it in the `ExoSense Configuration`_ object.
 
-
-Example
-""""""""
-
-.. code-block::
-
+This becomes especially useful in systems where data is published to a local MQTT broker, such as the Multitech LoRaWAN system. In this system, LoRa nodes publish data to MQTT topics on the local ``mosquitto`` daemon (e.g. ``lora/<mac-address>/down``).
 
 
 Install
@@ -43,7 +38,7 @@ Example
 
 .. code-block::
 
-    edged -H mqtt://f5330e5s8cho0000.m2.exosite.io/ -s mqtt-broker-1 -i mqtt-broker-1.ini go
+    edged -H mqtt://f5330e5s8cho0000.m2.exosite.io/ -s mqtt-subscriber-1 -i mqtt-subscriber-1.ini go
 
 
 ExoSense Configuration
@@ -84,11 +79,4 @@ Below is an example ``config_io`` settings that illustrates how mqtt devices or 
         }
       }
     }
-
-Schema For ``app_specific_config``
-""""""""""""""""""""""""""""""""""""
-
-**!!! TODO !!!**
-
-.. code-block:: yaml
 
