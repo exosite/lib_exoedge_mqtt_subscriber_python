@@ -21,7 +21,9 @@ sim_lambdas = {
     'nitrousOxide': lambda t: 1 * waves._wave_sine(pi/t),
     'temp': lambda t: 2 * waves._wave_sine(pi/t),
     'relativeHumidity': lambda t: 30 * waves._wave_sine(pi/t),
-    'location': lambda t: {"lat": 43.650883, "lng": -96.201642}
+    'location': lambda t: json.dumps(
+        {"lat": 43.650883+random.uniform(-0.005, 0.005),
+         "lng": -96.201642+random.uniform(-0.005, 0.005)})
 }
 
 
