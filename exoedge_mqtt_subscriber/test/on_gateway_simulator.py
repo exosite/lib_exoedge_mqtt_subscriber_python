@@ -66,11 +66,11 @@ for chan in config_io['channels'].keys():
         client=c
     ).start()
 
-try:
-    while True:
-        sleep(0.5)
-except KeyboardInterrupt:
-    for thread in threading.enumerate():
-        if isinstance(thread, StoppableThread):
-            thread.stop()
-    exit(0)
+while True:
+    try:
+        sleep(1.0)
+    except KeyboardInterrupt:
+        for thread in threading.enumerate():
+            if isinstance(thread, StoppableThread):
+                thread.stop()
+        exit(0)
