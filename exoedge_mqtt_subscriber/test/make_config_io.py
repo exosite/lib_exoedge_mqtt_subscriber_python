@@ -17,7 +17,7 @@ channel_template = {
         "min": None
     },
     "protocol_config": {
-        "report_on_change": True,
+        "report_on_change": False,
         "report_rate": 1000,
         "sample_rate": 1000,
         "mode": "async",

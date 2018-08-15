@@ -62,7 +62,7 @@ Below is an example ``config_io`` settings that illustrates how mqtt devices or 
             "min": null
           },
           "protocol_config": {
-            "report_on_change": true,
+            "report_on_change": false,
             "report_rate": 1000,
             "sample_rate": 1000,
             "mode": "async",
