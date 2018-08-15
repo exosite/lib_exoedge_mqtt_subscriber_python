@@ -3,6 +3,7 @@ import sys
 import threading
 import math
 import json
+import random
 from murano_client.client import StoppableThread
 from paho.mqtt.client import Client
 from time import sleep
@@ -54,7 +55,7 @@ class ChannelSim(StoppableThread):
                 )
                 if self.is_stopped():
                     break
-                sleep(1.0)
+                sleep(random.uniform(5.0, 15.0))
 
 for chan in config_io['channels'].keys():
     print("starting channel simulator: {}".format(chan))

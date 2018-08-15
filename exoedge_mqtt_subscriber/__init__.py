@@ -1,7 +1,7 @@
 """
     An ExoEdge source for interfacing with Modbus TCP devices.
 """
-# pylint: disable=W1202,C0111,C0301
+# pylint: disable=W1202,C0111,C0301,C0103
 import sys
 import time
 import logging
@@ -9,8 +9,8 @@ import threading
 from exoedge.sources import AsyncSource
 from paho.mqtt.client import Client as MQTTClient
 
-logging.getLogger('MQTT_BROKER')
-logging.basicConfig(level=logging.INFO)
+exo_logger = logging.getLogger('EXOEDGE')
+logging.basicConfig(name='MQTT_SUBSCRIBER', level=exo_logger.level)
 
 class MQTT_Subscriber(AsyncSource):
     """ Exoedge MQTT Broker source."""
