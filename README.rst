@@ -51,9 +51,9 @@ Below is an example ``config_io`` settings that illustrates how mqtt devices or 
 
     {
       "channels": {
-        "test": {
+        "topic0": {
           "description": "Subscription to MQTT topic <topic> on gateway.",
-          "display_name": "test",
+          "display_name": "topic0",
           "properties": {
             "data_type": "STRING",
             "max": null,
@@ -64,7 +64,7 @@ Below is an example ``config_io`` settings that illustrates how mqtt devices or 
             "app_specific_config": {
               "ip_address": "localhost",
               "port": 1883,
-              "topic": "test"
+              "topic": "topic0"
             },
             "application": "MQTTSubscriber",
             "report_on_change": false,
@@ -72,9 +72,9 @@ Below is an example ``config_io`` settings that illustrates how mqtt devices or 
             "sample_rate": 1000
           }
         },
-        "test1": {
+        "topic1": {
           "description": "Subscription to MQTT topic <topic> on gateway.",
-          "display_name": "test1",
+          "display_name": "topic1",
           "properties": {
             "data_type": "STRING",
             "max": null,
@@ -85,7 +85,7 @@ Below is an example ``config_io`` settings that illustrates how mqtt devices or 
             "app_specific_config": {
               "ip_address": "localhost",
               "port": 1883,
-              "topic": "test1"
+              "topic": "topic1"
             },
             "application": "MQTTSubscriber",
             "report_on_change": false,
@@ -96,3 +96,35 @@ Below is an example ``config_io`` settings that illustrates how mqtt devices or 
       }
     }
 
+
+Test
+########################
+
+Using the ``config_io`` above, use the following 3 terminals to test multiple topics on the same broker.
+
+**TODO:** Test multiple brokers at differenct ``IP:PORT``s.
+
+Terminal 1
+""""""""""""
+
+.. code-block:: bash
+
+    mosquitto -v
+
+Terminal 2
+""""""""""""
+
+.. code-block:: bash
+
+    edged -i edged.ini go
+
+Terminal 3
+""""""""""""
+
+.. code-block:: bash
+
+    mosquitto_pub -h localhost -t topic0 -m "hello topic0"
+
+.. code-block:: bash
+
+    mosquitto_pub -h localhost -t topic1 -m "hello topic1"
