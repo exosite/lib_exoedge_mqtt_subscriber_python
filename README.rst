@@ -7,6 +7,7 @@ With this source installed on a gateway and the ``ExoEdge`` daemon (``edged``) r
 
 This becomes especially useful in systems where data is published to a local MQTT broker, such as the Multitech LoRaWAN system. In this system, LoRa nodes publish data to MQTT topics on the local ``mosquitto`` daemon (e.g. ``lora/<mac-address>/down``).
 
+The basic design behind this "source" is that each channel is effectively a different topic on the local broker.
 
 Install
 #########
