@@ -9,14 +9,21 @@ def read(fname):
     """ Primarily used to open README file. """
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
+# safely get the CALVER version number without having to import it
+VERSION = {}
+with open("exoedge_mqttsubscriber/__version__.py") as fp:
+    exec(fp.read(), VERSION) # pylint: disable=W0122
+    assert VERSION.get('__version__'), \
+        "Unable to parse version from exoedge_mqttsubscriber/__version__.py."
+
 try:
     README = read('README.rst')
 except:
     README = 'README Not Found'
 
 setup(
-    name="exoedge_mqtt_subscriber",
-    version="18.8.15.10.44",
+    name="exoedge_mqttsubscriber",
+    version=VERSION['__version__'],
     author="Exosite LLC",
     author_email="support@exosite.com",
     description="An ExoEdge MQTT subscriber.",

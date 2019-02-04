@@ -50,7 +50,7 @@ desired_payload_template = {
     }
 }
 
-for i in range(0,4):
+for i in range(0,100):
     node_id = randomMacAddress()
     for index, (key, value) in enumerate(desired_payload_template.items()):
         chanid = '{}{}'.format(i, index)

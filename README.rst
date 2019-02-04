@@ -16,17 +16,18 @@ From Source
 
 .. code-block::
 
-    pip install -r requirements.txt
     python setup.py install
 
-From Github
+From Wheel
 """"""""""""
 
 The wheel for this hasn't been published yet.
 
 .. code-block::
 
-    pip install git+https://github.com/exosite/lib_exoedge_mqtt_subscriber_python.git
+    $ ./build.sh release
+    # lots of output...
+    $ pip install dist/*.whl
 
 ExoEdge Configuration
 ######################
@@ -44,37 +45,52 @@ Example
 ExoSense Configuration
 ########################
 
-Below is an example ``config_io`` settings that illustrates how mqtt devices or applications cat publish data into ExoEdge channels. Each channel is mapped directly to an MQTT subscription on the network (e.g. `localhost`, `192.168.254.2`).
-
-**Important:** This ``ExoEdge`` source is a ``channels.$id.protocol_config.mode.sync`` type source. Setting the mode to ``poll`` or ``async2`` will not work.
+Below is an example ``config_io`` settings that illustrates how mqtt devices or applications cat publish data into ExoEdge channels. Each channel is mapped directly to an MQTT broker and subscription on the network (e.g. ``localhost``->``device/temp``, ``192.168.254.2``->``device/pressure``).
 
 .. code-block:: json
 
     {
       "channels": {
-        "<id>": {
-          "display_name": "<topic>",
+        "test": {
           "description": "Subscription to MQTT topic <topic> on gateway.",
+          "display_name": "test",
           "properties": {
-            "max": null,
-            "precision": null,
             "data_type": "STRING",
-            "min": null
+            "max": null,
+            "min": null,
+            "precision": null
           },
           "protocol_config": {
+            "app_specific_config": {
+              "ip_address": "localhost",
+              "port": 1883,
+              "topic": "test"
+            },
+            "application": "MQTTSubscriber",
             "report_on_change": false,
             "report_rate": 1000,
-            "sample_rate": 1000,
-            "mode": "async",
+            "sample_rate": 1000
+          }
+        },
+        "test1": {
+          "description": "Subscription to MQTT topic <topic> on gateway.",
+          "display_name": "test1",
+          "properties": {
+            "data_type": "STRING",
+            "max": null,
+            "min": null,
+            "precision": null
+          },
+          "protocol_config": {
             "app_specific_config": {
-              "function": "subscribe",
-              "parameters": {
-                "ip_address": "localhost",
-                "port": 1883  ,
-              },
-              "positionals": ["<topic>"],
-              "module": "exoedge_mqtt_subscriber"
-            }
+              "ip_address": "localhost",
+              "port": 1883,
+              "topic": "test1"
+            },
+            "application": "MQTTSubscriber",
+            "report_on_change": false,
+            "report_rate": 1000,
+            "sample_rate": 1000
           }
         }
       }
