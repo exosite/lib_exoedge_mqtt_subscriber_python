@@ -8,6 +8,7 @@ import logging
 import threading
 from exoedge.sources import ExoEdgeSource
 from exoedge import logger
+from paho.mqtt.client import topic_matches_sub
 from paho.mqtt.client import Client as MQTTClient
 
 LOG = logger.getLogger(__name__, level=logging.getLogger('exoedge').getEffectiveLevel())
@@ -39,7 +40,7 @@ class MqttsubscriberExoEdgeSource(ExoEdgeSource):
             self.mqtt_clients[ip_address].channels[channel.protocol_config.app_specific_config['topic']] = channel
             def on_message(client, userdata, msg):
                 """ Default on_message function for tunable logging. """
-                LOG.debug("userdata: {} dup: {} info: {} mid: {} payload: {} qos: {} retain: {} state: {} timestamp: {} topic: {}"
+		LOG.debug("userdata: {} dup: {} info: {} mid: {} payload: {} qos: {} retain: {} state: {} timestamp: {} topic: {}"
                           .format(userdata,
                                   msg.dup,
                                   msg.info,
@@ -50,15 +51,20 @@ class MqttsubscriberExoEdgeSource(ExoEdgeSource):
                                   msg.state,
                                   msg.timestamp,
                                   msg.topic))
-                LOG.critical("{}->{} got {}".format(client, client.channels[msg.topic].name, msg.payload))
-                client.channels[msg.topic].put_sample(msg.payload)
-            self.mqtt_clients[ip_address].on_message = on_message
+               
+		for ch in client.channels:
+		    if topic_matches_sub(ch, msg.topic):
+			LOG.critical("{}->{} got {}".format(client, client.channels[ch].name, msg.payload))
+			client.channels[ch].put_sample(msg.payload)
+			break
+
+	    self.mqtt_clients[ip_address].on_message = on_message
             self.mqtt_clients[ip_address].connect(ip_address, port)
 
         for client in self.mqtt_clients.values():
             client.loop_start()
-            for channel in client.channels.values():
-                client.subscribe(channel.protocol_config.app_specific_config['topic'])
+            for channel in client.channels:
+                client.subscribe(channel)
 
         while not self.is_stopped():
             time.sleep(0.25)
