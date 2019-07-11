@@ -56,7 +56,6 @@ class MqttsubscriberExoEdgeSource(ExoEdgeSource):
                     if topic_matches_sub(ch, msg.topic):
                         LOG.critical("{}->{} got {}".format(client, client.channels[ch].name, msg.payload))
                         client.channels[ch].put_sample(msg.payload)
-                        break
 
             self.mqtt_clients[ip_address].on_message = on_message
             self.mqtt_clients[ip_address].connect(ip_address, port)
