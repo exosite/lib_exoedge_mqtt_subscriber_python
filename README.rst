@@ -47,6 +47,7 @@ ExoSense Configuration
 ########################
 
 Below is an example ``config_io`` settings that illustrates how mqtt devices or applications cat publish data into ExoEdge channels. Each channel is mapped directly to an MQTT broker and subscription on the network (e.g. ``localhost``->``device/temp``, ``192.168.254.2``->``device/pressure``).
+The topic field can use wildcard ``#`` and ``+``
 
 .. code-block:: json
 
@@ -65,7 +66,7 @@ Below is an example ``config_io`` settings that illustrates how mqtt devices or 
             "app_specific_config": {
               "ip_address": "localhost",
               "port": 1883,
-              "topic": "topic0"
+              "topic": "topic0/#"
             },
             "application": "MQTTSubscriber",
             "report_on_change": false,
@@ -124,7 +125,7 @@ Terminal 3
 
 .. code-block:: bash
 
-    mosquitto_pub -h localhost -t topic0 -m "hello topic0"
+    mosquitto_pub -h localhost -t topic0/zero -m "hello topic0"
 
 .. code-block:: bash
 
